@@ -122,6 +122,12 @@ $(function() { // jQuery
       }
       $('#temp').prepend("Temp : ");
       $('#city').prepend("City : ");
+      if (w.main.temp > 50) {
+        $('body').css("background", "url('mac.jpg')");
+      } else {
+        $('body').css("background", "url('coffe.jpg')");
+
+      }
     });
   }
   // farenhait to celsius convert or reverse
