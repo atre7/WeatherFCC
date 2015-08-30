@@ -101,6 +101,8 @@ $(function() { // jQuery
     var latlon = pos.split(",");
     lat = latlon[0];
     lon = latlon[1];
+    lat = 5;
+    lon = 5;
     var units = "metric";
     var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=" + units + "&APPID=ba7b81140fa7455096e194fe94222d86";
     $.getJSON(url, function(w) {
@@ -109,6 +111,8 @@ $(function() { // jQuery
       console.log(status + " " + w.main.temp);
       $('#temp').text(w.main.temp);
       $('#city').text(w.name);
+      $('#icon')
+        .append("<img src='http://openweathermap.org/img/w/" + w.weather[0].icon + ".png'>");
     });
   }
   // farenhait to celsius convert or reverse
