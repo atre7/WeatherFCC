@@ -1,5 +1,5 @@
 $(function() { // jQuery
-
+  var units ;
   // position IP
   //locationIP();
   function locationIP() {
@@ -10,7 +10,7 @@ $(function() { // jQuery
       console.log(location.city);
       console.log(location.country);
 
-      weatherByPos(location.loc, " IP position");
+      weatherByPos(location.loc, " IP position", units);
     }, "json");
 
 
@@ -19,8 +19,10 @@ $(function() { // jQuery
   getLocation();
 
   function getLocation() {
+    console.log("units " + units);
     if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(showPosition, showError);
+      //  navigator.geolocation.watchPosition(showPosition, showError); getCurrentPosition
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
       $('#city').text("Geolocation is not supported by this browser.");
     }
@@ -30,7 +32,7 @@ $(function() { // jQuery
     $('#city').text("Latitude: " + position.coords.latitude +
       "  Longitude: " + position.coords.longitude);
     console.log("gpsPosition");
-    weatherByPos(position.coords.latitude + "," + position.coords.longitude, " GPS position");
+    weatherByPos(position.coords.latitude + "," + position.coords.longitude, " GPS position", units);
   }
 
   function showError(error) {
@@ -94,7 +96,7 @@ $(function() { // jQuery
   // weather lat lon
 
   //  weatherByPos();
-  function weatherByPos(pos, status) {
+  function weatherByPos(pos, status, units) {
 
     var lat = 48;
     var lon = 17;
@@ -102,7 +104,7 @@ $(function() { // jQuery
     lat = latlon[0];
     lon = latlon[1];
 
-    var units = "metric";
+    //  var units = "metric";
     var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=" + units + "&APPID=ba7b81140fa7455096e194fe94222d86";
     $.getJSON(url, function(w) {
       //  console.log(w);
@@ -112,8 +114,26 @@ $(function() { // jQuery
       $('#city').text(w.name);
       $('#icon')
         .append("<img src='http://openweathermap.org/img/w/" + w.weather[0].icon + ".png'>");
+      if (units === "metric") {
+        $('#temp').append(" C");
+      } else {
+        $('#temp').append(" F");
+      }
+      $('#temp').prepend("Temp : ");
+      $('#city').prepend("City : ");
     });
   }
   // farenhait to celsius convert or reverse
-
+  $('#fc').click(function() {
+    console.log("1" + units);
+    if (units === "metric") {
+      units = "imperial";
+      getLocation();
+      console.log("2" + units);
+    } else {
+      units = "metric";
+      getLocation();
+      console.log("2" + units);
+    }
+  })
 }) // jQuery end
