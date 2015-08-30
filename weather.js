@@ -112,8 +112,9 @@ $(function() { // jQuery
       console.log(status + " " + w.main.temp);
       $('#temp').text(w.main.temp);
       $('#city').text(w.name);
+      $('#icon').find("img:first-child").remove();
       $('#icon')
-        .append("<img src='http://openweathermap.org/img/w/" + w.weather[0].icon + ".png'>");
+        .prepend("<img src='http://openweathermap.org/img/w/" + w.weather[0].icon + ".png'>");
       if (units === "metric") {
         $('#temp').append(" C");
       } else {
