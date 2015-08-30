@@ -36,7 +36,7 @@ $(function() { // jQuery
   function showError(error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        $('#city').text("User denied the request for Geolocation.");
+        $('#city').text("User denied the request for Geolocation. Position IP is used.");
         locationIP();
 
         break;
@@ -107,6 +107,8 @@ $(function() { // jQuery
       //  console.log(w);
       console.log(status + " " + w.name);
       console.log(status + " " + w.main.temp);
+      $('#temp').text(w.main.temp);
+      $('#city').text(w.name);
     });
   }
   // farenhait to celsius convert or reverse
