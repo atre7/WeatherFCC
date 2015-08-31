@@ -1,5 +1,5 @@
 $(function() { // jQuery
-  var units ;
+  var units = "metric";
   // position IP
   //locationIP();
   function locationIP() {
