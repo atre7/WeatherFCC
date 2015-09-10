@@ -6,7 +6,7 @@ $(function() { // jQuery
   // c = (f-32) *5/9
   // f = c* 9/5 +32
   function locationIP() {
-
+    // atom coment
     $.get("http://ipinfo.io", function(location) {
 
       console.log("IP pos " + location.loc);
