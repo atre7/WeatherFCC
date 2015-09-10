@@ -2,6 +2,9 @@ $(function() { // jQuery
   var units = "metric";
   // position IP
   //locationIP();
+
+  // c = (f-32) *5/9
+  // f = c* 9/5 +32
   function locationIP() {
 
     $.get("http://ipinfo.io", function(location) {
@@ -107,7 +110,12 @@ $(function() { // jQuery
     //  var units = "metric";
     var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=" + units + "&APPID=ba7b81140fa7455096e194fe94222d86";
     $.getJSON(url, function(w) {
-      //  console.log(w);
+      var windDeg = w.wind.deg ;
+      console.log(w);
+      console.log("icon id : " + w.weather[0].icon);
+      console.log("id : " + w.weather[0].id);
+      getIcon(w.weather[0].id);
+      console.log("wind deg " + w.wind.deg + " speed " + w.wind.speed);
       console.log(status + " " + w.name);
       console.log(status + " " + w.main.temp);
       $('#temp').text(w.main.temp);
@@ -116,20 +124,55 @@ $(function() { // jQuery
       $('#icon')
         .prepend("<img src='http://openweathermap.org/img/w/" + w.weather[0].icon + ".png'>");
       if (units === "metric") {
-        $('#temp').append(" C");
+        $('#temp').append("<i class='wi wi-celsius'></i>");
       } else {
-        $('#temp').append(" F");
+        $('#temp').append("<i class='wi wi-fahrenheit'></i>");
       }
-      $('#temp').prepend("Temp : ");
+      $('#temp').prepend("Temperature ");
       $('#city').prepend("City : ");
-      if (w.main.temp > 50) {
+      if (w.main.temp > 40) {
         $('body').css("background", "url('mac.jpg')");
       } else {
         $('body').css("background", "url('coffe.jpg')");
 
       }
+      //wi-wind.towards-0-deg
+      // <i class="wi wi-night-sleet fi-fw" style="font-size: 6em"></i>
+      $('#windIcon').append("<i class='wi wi-wind towards-" + windDeg + "-deg fi-fw' style='font-size: 8em'></i>");
     });
   }
+  function getIcon(id) {
+    switch (id) {
+      case 800 : console.log("800");
+        return "<i class='wi wi-day-sunny'></i>";
+        break;
+      case 801 : console.log("801");
+        return "<i class='wi wi-day-cloudy'></i>";
+        break;
+      case 802 : console.log("802");
+        return "<i class='wi wi-cloudy'></i>";
+        break;
+      case 803 : console.log("803");
+        return "<i class='wi wi-cloudy-gusts'></i>";
+        break;
+      case 521 : console.log("521");
+        return "<i class='wi wi-showers'></i>";
+        break;
+      case 500 :
+        return "<i class='wi wi-rain'></i>";
+        break;
+      case 211 :
+        return "<i class='wi wi-thunderstorm'></i>";
+        break;
+      case 601 :
+        return "<i class='wi wi-snow'></i>";
+        break;
+      case 701 :
+        return "<i class='wi wi-fog'></i>";
+        break;
+    }
+  }
+
   // farenhait to celsius convert or reverse
   $('#fc').click(function() {
     console.log("1" + units);
